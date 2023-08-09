@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1",
+        "title": "Create the new Twitter",
+        "description":"as Twitter is dying, it's the perfect time to create a new one(from server)" 
+    },
+    {
+        "id": "2",
+        "title": "Map Browser Extensions",
+        "description": "Create a browser extensions that opens a popup displaying a map of the first address appearing in a web page"
+    },
+    {
+        "id": "3",
+        "title": "MotorBike Site",
+        "description": "Create a website that helps riders to find their new motorbike"
+    },
+    {
+        "id": "4",
+        "title": "React and Next.js Blog",
+        "description": "Create a blog devoted to react and next"
+    }
+]
