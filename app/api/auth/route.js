@@ -1,28 +1,74 @@
-import { createUserWithEmailAndPassword } from "@firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "@firebase/auth";
 import { NextResponse } from "next/server";
 import { auth } from "./firebase-config";
 
 export async function POST(request) {
   const { email, password, task } = await request.json();
   if (task === "register") {
-    console.log("case - register");
+    try {
+      const credentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log({
+        token: credentials.user.accesToken,
+        uuid: credentials.user.uid,
+      });
+      console.log({ credentials });
+      return NextResponse.json({
+        status: 200,
+        message: `account for ${email} created`,
+      });
+    } catch (err) {
+      if (err.code.includes("email-already-in-use")) {
+        return NextResponse.json({
+          status: 500,
+          message: "Sorry, this email is already in use",
+        });
+      }
 
-    const credentials = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    console.log({ token: credentials.user.accesToken, uuid: credentials.user.uid});
-        console.log({ credentials });
-    return NextResponse.json({
-      status: 200,
-      message: `account for ${email} created`,
-    });
+      if (err.code.includes("auth/weak-password")) {
+        return NextResponse.json({
+          status: 500,
+          message: "Sorry, the password should be at least 6 character",
+        });
+      }
+    }
   }
-
   if (task === "login") {
-    //TODO
+    try {
+      const credentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log({ credentials });
+      return NextResponse.json({
+        status: 200,
+        message: `Welcome back ${email}`,
+      });
+    } catch (err) {
+      if (err.code.includes("auth/wrong-password")) {
+        return NextResponse.json({
+          status: 500,
+          message: "Login failed. Email or password incorrect",
+        });
+      }
+      if (err.code.includes("auth/user not found")) {
+        return NextResponse.json({
+          status: 500,
+          message: `No user founc with this email ${email}`,
+        });
+      }
+      return NextResponse.json({
+        status: 500,
+        message: "Login error",
+      });
+    }
   }
-
   return NextResponse.json({ status: 200, message: "unknown task" });
 }
