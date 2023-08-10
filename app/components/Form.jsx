@@ -14,7 +14,7 @@ export default function Form({ formTitle }) {
       title: ideaTitle,
       description: ideaDescription,
     };
-    const option = {
+    const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export default function Form({ formTitle }) {
       body: JSON.stringify(data),
     };
 
-    const response = await fetch(URL, option);
+    const response = await fetch(URL, options);
     const result = await response.json()
     console.log({ resultFromClient: result });
     return result;
