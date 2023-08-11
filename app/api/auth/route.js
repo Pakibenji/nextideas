@@ -50,6 +50,9 @@ export async function POST(request) {
       return NextResponse.json({
         status: 200,
         message: `Welcome back ${email}`,
+        email,
+        uid: credentials.user.uid,
+        jwt: credentials.user.accessToken,
       });
     } catch (err) {
       if (err.code.includes("auth/wrong-password")) {

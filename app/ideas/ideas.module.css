@@ -24,6 +24,10 @@
     font-size: 14px;
 }
 
+.lnk {
+    font-size: 12px;
+}
+
 @media screen and (max-width: 450px) {
     .container {
         flex-direction: column;

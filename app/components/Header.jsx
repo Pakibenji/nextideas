@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./header.module.css";
+import User from "./User";
 
 export default function Header() {
   return (
@@ -13,9 +14,7 @@ export default function Header() {
             Ideas
           </Link>
           <Link href="/newidea" className={styles.lnk}>New Idea</Link>
-          <Link href="/register" className={styles.lnk}>
-            Register
-          </Link>
+          <User />
         </div>
       </nav>
     </header>
